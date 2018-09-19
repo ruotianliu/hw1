@@ -1,1 +1,1 @@
-ffmpeg -r 1/5 -f image2 -s 1920x1080 -i pic%04d.png  -crf 25  -pix_fmt yuv420p pictures.mp4
+ffmpeg -r 1/5 -f image2 -s 600x600 -i pic%04d.png  -crf 25  -pix_fmt yuv420p pictures.mp4
