@@ -2,6 +2,7 @@ import tweepy
 from tweepy import OAuthHandler
 import json
 import wget
+import sys
  
 consumer_key = 'YOUR-CONSUMER-KEY'
 consumer_secret = 'YOUR-CONSUMER-SECRET'
@@ -56,5 +57,5 @@ i=1
 for media_file in media_files:
     wget.download(media_file)
     i=i+1
-    if(i>100):
+    if(i>sys.argv[1]):
         break
