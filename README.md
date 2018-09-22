@@ -1,5 +1,5 @@
 # This is the submission of the EC601 mini project 1.
-First, to download pictures from twitter accounts, use the 'download pictures' code. You should enter your own consumer key, consumer secret, access token, access secrest to acquire access rights. Then you modify the screen name, where I entered 'NBA', to visit the twitter account that you want. And you can also input different numbers to acquire different numbers of picture.
+First, to download pictures from twitter accounts, use the 'download pictures' code. You should enter your own consumer key, consumer secret, access token, access secrest to acquire access rights. Then you modify the screen name, where I entered 'NBA', to visit the twitter account that you want. And you can also input different numbers to acquire different numbers of picture. For example, you can input 'python downloadpictures.py 5' to get 5 pictures.
 
 After you get pictures, it's time to convert them into videos. The code of 'converting' should be used in the command line. You should modify the parameters to adapt your pictures' size and to meet your own demands.
 
