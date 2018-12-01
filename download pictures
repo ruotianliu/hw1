@@ -5,7 +5,11 @@ import wget
 import os
 import PIL
 from PIL import Image
- 
+import io
+from google.cloud import vision
+from google.cloud.vision import types
+
+
 consumer_key = ''
 consumer_secret = ''
 access_token = ''
@@ -30,12 +34,14 @@ auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
-tweets = api.user_timeline(screen_name='Mmq30584069',count=200, include_rts=False,exclude_replies=True)
+twitter_id = 'Mmq30584069'
+
+tweets = api.user_timeline(screen_name=twitter_id,count=200, include_rts=False,exclude_replies=True)
 
 last_id = tweets[-1].id
  
 while (True):
-    more_tweets = api.user_timeline(screen_name='Mmq30584069',count=200,include_rts=False,exclude_replies=True,max_id=last_id-1)
+    more_tweets = api.user_timeline(screen_name=twitter_id,count=200,include_rts=False,exclude_replies=True,max_id=last_id-1)
 # There are no more tweets
     if (len(more_tweets) == 0):
       break
@@ -55,7 +61,7 @@ for media_file in media_files:
 path = os.getcwd()
 
 filelist = os.listdir(path)
-total_num = len(filelist)
+total_num = 0
 i = 0
 for item in filelist:
     if item.endswith('.jpg'):
@@ -63,7 +69,7 @@ for item in filelist:
          dst = os.path.join(os.path.abspath(path), 'img' + format(str(i), '0>3s') + '.jpg')
          os.rename(src, dst)
          i = i + 1
-         
+         total_num = total_num + 1
 i=0
 for item in filelist:
     if item.endswith('.jpg'):
@@ -73,5 +79,60 @@ for item in filelist:
          i=i+1
 
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ""
+def detect_labels(path):
+    """Detects labels in the file."""
+    client = vision.ImageAnnotatorClient()
+
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+    label_list = []
+    
+    image = vision.types.Image(content=content)
+   
+    response = client.label_detection(image=image)
+    labels = response.label_annotations
+    
+    for label in labels:
+        label_list.append(label.description)
+    return label_list
+
+for i in range(10):
+    PATH=os.getcwd()
+    labels = detect_labels(PATH+'/'+'img00'+str(i)+'.jpg')
+    
+    #connect to database
+    db = pymysql.connect("localhost", "root", "lrtbest2018", "test")
+    myCursor = db.cursor()
+        
+    #insert colunms into table tweetsInfomation
+    try:
+        sqlFormula = "INSERT INTO tweetsInfomation (name, image_id, image_num, label) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')" % (twitterID, i, total_num, labels)
+  
+        myCursor.execute(sqlFormula)
+        db.commit()
+    except:
+        print("can not insert columns")
+        db.rollback()
+        db.close()
+        
+for i in range(10,12):
+    PATH=os.getcwd()
+
+    labels = detect_labels(PATH+'/'+'img0'+str(i)+'.jpg')
 
 
+    #connect to database
+    db = pymysql.connect("localhost", "root", "lrtbest2018", "test")
+    myCursor = db.cursor()
+        
+    #insert colunms into table tweetsInfomation
+    try:
+        sqlFormula = "INSERT INTO tweetsInfomation (name, image_id, image_num, images, label) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')" % (twitterID, i, total_num, labels)
+  
+        myCursor.execute(sqlFormula)
+        db.commit()
+    except:
+        print("can not insert columns")
+        db.rollback()
+        db.close()
