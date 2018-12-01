@@ -129,7 +129,7 @@ for i in range(10,12):
         
     #insert colunms into table tweetsInfomation
     try:
-        sqlFormula = "INSERT INTO tweetsInfomation (name, image_id, image_num, images, label) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')" % (twitterID, i, total_num, labels)
+        sqlFormula = "INSERT INTO tweetsInfomation (name, image_id, image_num, label) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')" % (twitterID, i, total_num, labels)
   
         myCursor.execute(sqlFormula)
         db.commit()
