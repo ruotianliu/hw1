@@ -9,6 +9,7 @@ import io
 from google.cloud import vision
 from google.cloud.vision import types
 import pymysql
+import sys
 
 consumer_key = ''
 consumer_secret = ''
@@ -34,7 +35,7 @@ auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
-twitter_id = 'Mmq30584069'
+twitter_id = sys.argv[1]
 
 tweets = api.user_timeline(screen_name=twitter_id,count=200, include_rts=False,exclude_replies=True)
 
