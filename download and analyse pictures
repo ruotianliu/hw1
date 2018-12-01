@@ -8,7 +8,7 @@ from PIL import Image
 import io
 from google.cloud import vision
 from google.cloud.vision import types
-
+import pymysql
 
 consumer_key = ''
 consumer_secret = ''
