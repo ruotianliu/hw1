@@ -2,6 +2,9 @@ import tweepy
 from tweepy import OAuthHandler
 import json
 import wget
+import os
+import PIL
+from PIL import Image
  
 consumer_key = ''
 consumer_secret = ''
@@ -48,3 +51,27 @@ for status in tweets:
 
 for media_file in media_files:
     wget.download(media_file)
+    
+path = os.getcwd()
+
+filelist = os.listdir(path)
+total_num = len(filelist)
+i = 0
+for item in filelist:
+    if item.endswith('.jpg'):
+         src = os.path.join(os.path.abspath(path), item)
+         dst = os.path.join(os.path.abspath(path), 'img' + format(str(i), '0>3s') + '.jpg')
+         os.rename(src, dst)
+         i = i + 1
+         
+i=0
+for item in filelist:
+    if item.endswith('.jpg'):
+         img=Image.open(item)
+         img_resized=img.resize((768,576),PIL.Image.ANTIALIAS)
+         img_resized.save('img'+format(str(i),'0>3s')+'.jpg')
+         i=i+1
+
+
+
+
