@@ -3,7 +3,7 @@ import os
 from google.cloud import vision
 from google.cloud.vision import types
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "c:\\miniproject3\\My First Project-3abdb141da92.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ""
 def detect_labels(path):
     """Detects labels in the file."""
     client = vision.ImageAnnotatorClient()
