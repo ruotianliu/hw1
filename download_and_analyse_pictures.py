@@ -10,6 +10,8 @@ from google.cloud import vision
 from google.cloud.vision import types
 import pymysql
 import sys
+import pymongo
+
 
 consumer_key = ''
 consumer_secret = ''
@@ -121,7 +123,7 @@ for i in range(10):
     myclient = pymongo.MongoClient()
     mydb = myclient.Twitter
     try:
-        mydb.twitterInfo.insert_one({"name":("%s")%(name), "image_id": ("%s")%(image_id), "image_num":("%s")%(image_num), "label":("%s")%(label)})
+        mydb.twitterInfo.insert_one({"name":("%s")%(twitterID), "image_id": ("%s")%(i), "image_num":("%s")%(total_num), "label":("%s")%(labels)})
     except:
         print("can not insert columns")
       
@@ -131,7 +133,7 @@ for i in range(10,12):
     labels = detect_labels(PATH+'/'+'img0'+str(i)+'.jpg')
 
 
-    #connect to database
+    #connect to mysql
     db = pymysql.connect("localhost", "root", "lrtbest2018", "test")
     myCursor = db.cursor()
         
@@ -150,6 +152,6 @@ for i in range(10,12):
     myclient = pymongo.MongoClient()
     mydb = myclient.Twitter
     try:
-        mydb.twitterInfo.insert_one({"name":("%s")%(name), "image_id": ("%s")%(image_id), "image_num":("%s")%(image_num), "label":("%s")%(label)})
+        mydb.twitterInfo.insert_one({"name":("%s")%(twitterID), "image_id": ("%s")%(i), "image_num":("%s")%(total_num), "label":("%s")%(labels)})
     except:
         print("can not insert columns")
