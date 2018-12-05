@@ -102,7 +102,7 @@ for i in range(10):
     PATH=os.getcwd()
     labels = detect_labels(PATH+'/'+'img00'+str(i)+'.jpg')
     
-    #connect to database
+    #connect to mysql
     db = pymysql.connect("localhost", "root", "lrtbest2018", "test")
     myCursor = db.cursor()
         
@@ -117,6 +117,14 @@ for i in range(10):
         db.rollback()
         db.close()
         
+    #connect to mongodb
+    myclient = pymongo.MongoClient()
+    mydb = myclient.Twitter
+    try:
+        mydb.twitterInfo.insert_one({"name":("%s")%(name), "image_id": ("%s")%(image_id), "image_num":("%s")%(image_num), "label":("%s")%(label)})
+    except:
+        print("can not insert columns")
+      
 for i in range(10,12):
     PATH=os.getcwd()
 
@@ -137,3 +145,11 @@ for i in range(10,12):
         print("can not insert columns")
         db.rollback()
         db.close()
+        
+    #connect to mongodb
+    myclient = pymongo.MongoClient()
+    mydb = myclient.Twitter
+    try:
+        mydb.twitterInfo.insert_one({"name":("%s")%(name), "image_id": ("%s")%(image_id), "image_num":("%s")%(image_num), "label":("%s")%(label)})
+    except:
+        print("can not insert columns")
